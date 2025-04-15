@@ -1,0 +1,118 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    background: #222;
+    color: #fff;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+
+
+.result {
+    margin-top: 20px;
+    font-size: 24px;
+}
+
+
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    background: radial-gradient(circle at center, #1a1a1a, #000);
+    color: white;
+    padding: 30px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.chip-bank {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.chip {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid white;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.chip[data-value="10"] {
+    background: repeating-conic-gradient(gold 0deg 10deg, #e0c200 10deg 20deg);
+    color: black;
+}
+
+.chip[data-value="50"] {
+    background: repeating-conic-gradient(silver 0deg 10deg, #bbb 10deg 20deg);
+    color: black;
+}
+
+.chip[data-value="100"] {
+    background: repeating-conic-gradient(crimson 0deg 10deg, #800000 10deg 20deg);
+    color: white;
+}
+
+.chip:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px white;
+}
+
+.chip.selected {
+    box-shadow: 0 0 30px #00ffcc;
+}
+
+.betting-area {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.betting-zone {
+    width: 200px;
+    height: 200px;
+    border: 2px dashed white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.betting-zone:empty {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.2rem;
+}
+
+#selected-amount {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.result {
+    margin-top: 20px;
+    background: #222;
+    padding: 15px;
+    border-radius: 10px;
+    display: inline-block;
+}
