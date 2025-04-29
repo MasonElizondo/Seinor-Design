@@ -1,0 +1,175 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    background: radial-gradient(circle at center, #1a1a1a, #000);
+    color: white;
+    padding: 30px;
+}
+
+.back-to-home {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.result {
+    margin-top: 20px;
+    background: #222;
+    padding: 15px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.result.error {
+    color: red;
+}
+
+.last-spins {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 50%;
+    text-align: center;
+}
+
+.last-spins th, .last-spins td {
+    border: 1px solid white;
+    padding: 10px;
+}
+
+.chip-bank {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.chip {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid white;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+
+
+.number-grid {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    gap: 10px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.special-bets {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.special-bets.left {
+    justify-content: flex-start;
+}
+
+.special-bets.right {
+    justify-content: flex-end;
+}
+
+.betting-cell {
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.betting-cell.red {
+    background-color: red;
+    color: white;
+}
+
+.betting-cell.black {
+    background-color: black;
+    color: white;
+}
+
+.betting-cell.zero {
+    grid-row: span 3;
+    background-color: green;
+    color: white;
+    width: 60px;
+    height: 180px;
+    text-align: center;
+    line-height: 180px;
+}
+
+.betting-cell.column {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+}
+
+.betting-cell.dozen,
+.betting-cell.special {
+    width: 100px;
+    height: 60px;
+    background-color: rgb(97, 97, 97);
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 5px;
+}
+
+.betting-cell.special.color.red {
+    background-color: red;
+    color: white;
+}
+
+.betting-cell.special.color.black {
+    background-color: black;
+    color: white;
+}
+
+.betting-cell.special.color.green {
+    background-color: green;
+    color: white;
+    font-weight: bold;
+}
+
+.betting-cell:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.betting-board {
+    margin: 30px auto; /* Center the board horizontally */
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* Adjust grid columns for left, center, and right alignment */
+    gap: 10px;
+    width: fit-content; /* Ensure the board width adjusts to its content */
+    justify-content: center; /* Center the grid content horizontally */
+    align-items: center; /* Center the grid content vertically */
+    padding: 20px; /* Add padding for spacing */
+}

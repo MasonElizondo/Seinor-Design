@@ -1,0 +1,271 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Casino Roulette</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            background: radial-gradient(circle at center, #1a1a1a, #000);
+            color: white;
+            padding: 30px;
+        }
+
+        .wheel-container {
+            margin: 20px auto;
+            position: relative;
+            width: 500px;
+            height: 500px;
+        }
+
+        .betting-board {
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 300px;
+        }
+
+        .betting-cell {
+            width: 100px;
+            height: 100px;
+            border: 2px solid white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            color: white;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .betting-cell:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chip-bank {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .chip {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 4px solid white;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .chip[data-value="10"] {
+            background: gold;
+            color: black;
+        }
+
+        .chip[data-value="50"] {
+            background: silver;
+            color: black;
+        }
+
+        .chip[data-value="100"] {
+            background: crimson;
+            color: white;
+        }
+
+        .chip:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px white;
+        }
+
+        .chip.selected {
+            box-shadow: 0 0 30px #00ffcc;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-to-home">⬅️ Back to Home</a>
+    <h1>Welcome to Roulette</h1>
+    <p>Your Balance: {{ balance }} chips</p>
+
+    {% if result %}
+    <div class="result">
+        <h2>🎯 Spin Result:</h2>
+        <p><strong>Number:</strong> {{ result.spin_number }}</p>
+        <p><strong>Color:</strong> {{ result.spin_color }}</p>
+        <p><strong>Payout:</strong> {{ result.payout }} chips</p>
+        <p><strong>New Balance:</strong> {{ result.new_balance }} chips</p>
+    </div>
+    {% endif %}
+
+    <!-- Roulette Wheel -->
+    <div class="wheel-container">
+        <canvas id="roulette-wheel" width="500" height="500"></canvas>
+        <script src="{% static 'js/roulette.js' %}">
+            const canvas = document.getElementById('roulette-wheel');
+            const ctx = canvas.getContext('2d');
+            const numbers = {{ numbers|safe }};
+            const redNumbers = {{ red_numbers|safe }};
+            const wheelData = {
+                numbers: numbers,
+                redNumbers: redNumbers
+            };
+            drawRouletteWheel(ctx, wheelData);
+        </script>
+    </div>
+
+    <!-- Betting Board -->
+    <h2>Place Your Bets</h2>
+    <div class="chip-bank">
+        <div class="chip" data-value="10">10</div>
+        <div class="chip" data-value="50">50</div>
+        <div class="chip" data-value="100">100</div>
+    </div>
+    <div id="selected-amount">Selected Amount: None</div>
+
+    <!-- Casino-Style Betting Board -->
+    <div class="betting-board">
+
+        <!-- Special Bets (Left Side) -->
+        <div class="special-bets left">
+            <div class="betting-cell special" data-bet="parity" data-value="even">Even</div>
+            <div class="betting-cell special" data-bet="parity" data-value="odd">Odd</div>
+
+        </div>
+
+
+
+        <!-- Special Bets (Top Side) -->
+        <div class="special-bets top-center">
+            <div class="betting-cell special" data-bet="range" data-value="1-18">1 to 18</div>
+            <div class="betting-cell special" data-bet="range" data-value="19-36">19 to 36</div>
+
+
+
+
+        <!-- Number Grid -->
+        <div class="number-grid">
+            <!-- Row 1 -->
+            <div class="row">
+                {% for number in numbers.0 %}
+                <div
+                    class="betting-cell {% if number in red_numbers %}red{% else %}black{% endif %}" 
+                    data-bet="number"
+                    data-value="{{ number }}">
+                    {{ number }}
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Row 2 -->
+            <div class="row">
+                {% for number in numbers.1 %}
+                <div
+                    class="betting-cell {% if number in red_numbers %}red{% else %}black{% endif %}" 
+                    data-bet="number"
+                    data-value="{{ number }}">
+                    {{ number }}
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Row 3 -->
+            <div class="row">
+                {% for number in numbers.2 %}
+                <div
+                    class="betting-cell {% if number in red_numbers %}red{% else %}black{% endif %}" 
+                    data-bet="number"
+                    data-value="{{ number }}">
+                    {{ number }}
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+        </div>
+        <div class="special-bets right">
+            <div class="betting-cell special" data-bet="dozen" data-value="1-12">1st 12</div>
+            <div class="betting-cell special" data-bet="dozen" data-value="13-24">2nd 12</div>
+            <div class="betting-cell special" data-bet="dozen" data-value="25-36">3rd 12</div>
+        </div>
+
+
+
+        <!-- Special Bets (Bottom Side) -->
+        <div class="special-bets bottom-center">
+            <div class="betting-cell special color green" data-bet="color " data-value="green">0</div>
+            <div class="betting-cell special color red" data-bet="color" data-value="red">Red</div>
+            <div class="betting-cell special color black" data-bet="color" data-value="black">Black</div>
+        </div>
+
+
+
+    <!-- Betting Form -->
+    <form method="post" id="bet-form">
+        {% csrf_token %}
+        <input type="hidden" name="bet_type" id="bet_type">
+        <input type="hidden" name="value" id="value">
+        <input type="hidden" name="amount" id="amount">
+        <button type="submit" id="place-bet-button">Place Bet</button>
+    </form>
+
+    <!-- Last 5 Spins Section -->
+    <div class="last-spins-container">
+        <h2>Last 5 Spins</h2>
+        <table class="last-spins align-center">
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Color</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for spin in last_spins %}
+                <tr>
+                    <td>{{ spin.number }}</td>
+                    <td>{{ spin.color }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <script>
+        function updateResults(data) {
+            const resultDiv = document.querySelector('.result');
+            resultDiv.innerHTML = `
+                <h2>🎯 Spin Result:</h2>
+                <p><strong>Number:</strong> ${data.result.spin_number}</p>
+                <p><strong>Color:</strong> ${data.result.spin_color}</p>
+                <p><strong>Payout:</strong> ${data.result.payout} chips</p>
+                <p><strong>New Balance:</strong> ${data.result.new_balance} chips</p>
+            `;
+        }
+
+        function updateLastSpinsTable(lastSpins) {
+            const lastSpinsTableBody = document.querySelector('.last-spins tbody');
+            lastSpinsTableBody.innerHTML = ''; // Clear existing rows
+
+            lastSpins.forEach(spin => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${spin.number}</td>
+                    <td>${spin.color}</td>
+                `;
+                lastSpinsTableBody.appendChild(row);
+            });
+        }
+    </script>
+</div>
+</body>
+</html>

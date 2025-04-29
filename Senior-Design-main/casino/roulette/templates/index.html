@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casino Homepage</title>
+</head>
+<body>
+    <h1>Welcome to the Casino</h1>
+    <p>Experience the thrill of gambling with our exciting games!</p>
+    <p>We offer a variety of games including:</p>
+    <p>Select a game to play:</p>
+    {% if user.is_authenticated %}
+        <a href="{% url 'roulette' %}">Play Roulette</a>
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</body>
+</html>
